@@ -34,3 +34,16 @@ You may assume that the delimiters (commas, pipes and spaces) do not appear anyw
 * Tell us which script or rake task to run in order to produce the desired output from your program.
 * Specify what version of Ruby you’re using. You may use any official release of the CRuby interpreter.
 * You may use the core and the standard library, but no gems, except Rake. If you do use Rake, specify the version.
+
+## Usage
+
+The problem is solved as a gem. Ruby version 1.9.2. Rake 0.9.2. Ruby gems 1.8.5.
+
+    gem build cyrus_data.gemspec
+    gem install cyrus_data-1.gem
+
+The gem comes with an executable, cyrus_data, that takes space seperated file names and then reads the files, printing the three outputs to the console.
+
+   cyrus_data pipe space comma
+
+This would work run from a directory containing files named pipe, space, and comma.

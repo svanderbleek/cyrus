@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'cyrus_data'
+
+module CyrusData
+ 
+  files = ARGV.map do |file|
+    File.open file
+  end
+
+  data = DataReader.read *files
+
+  store = DataStore.new
+  store.store *data
+  
+  puts 'Output 1'
+  DataWriter.write store.order_by :gender, :last_name, :ascending
+  puts 'Output 2'
+  DataWriter.write store.order_by :birthdate, :ascending
+  puts 'Output 3'
+  DataWriter.write store.order_by :last_name, :descending
+
+end
