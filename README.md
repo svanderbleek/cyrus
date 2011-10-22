@@ -44,6 +44,6 @@ The problem is solved as a gem. Ruby version 1.9.2. Rake 0.9.2. Ruby gems 1.8.5.
 
 The gem comes with an executable, cyrus_data, that takes space seperated file names and then reads the files, printing the three outputs to the console.
 
-   cyrus_data pipe space comma
+    cyrus_data pipe space comma
 
 This would work run from a directory containing files named pipe, space, and comma.
