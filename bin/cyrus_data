@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-
+$:.push "/Users/cyrus/dev/codetest/cyrus/lib"
 require 'cyrus_data'
 
 module CyrusData

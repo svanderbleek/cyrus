@@ -17,10 +17,20 @@ module CyrusData
       assert_equal 1, @store.data.size
     end
 
-    def test_reads_date
+    def test_reads_dash_date
       @store.store ['A', 'B', 'M', '1-1-1990', 'R']
       assert_equal Date.parse('1-1-1990'), @store.data.first.birthdate
     end
+
+    def test_reads_slash_date
+      @store.store ['A', 'B', 'M', '1/1/1990', 'R']
+      assert_equal Date.parse('1-1-1990'), @store.data.first.birthdate
+    end
+
+    def test_reads_date_by_month_day_year
+      @store.store ['A', 'B', 'M', '1/13/1990', 'R']
+      assert_equal Date.parse('13-1-1990'), @store.data.first.birthdate
+    end    
 
     def test_datum_to_string
       @store.store ['A', 'B', 'M', '1-1-1990', 'R']

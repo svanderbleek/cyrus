@@ -12,7 +12,7 @@ module CyrusData
           :last_name      => fields[0],
           :first_name     => fields[1],
           :gender         => fields[2],
-          :birthdate      => Date.parse(fields[3]),
+          :birthdate      => parse_date(fields[3]),
           :favorite_color => fields[4]
         }
       end
@@ -28,6 +28,14 @@ module CyrusData
       private 
         def format birthdate
           birthdate.strftime('%m/%d/%Y')
+        end
+
+        def parse_date date
+          if date =~ /-/
+            Date.strptime date, '%m-%d-%Y'
+          else
+            Date.strptime date, '%m/%d/%Y'
+          end
         end
 
     end

@@ -11,10 +11,27 @@ module CyrusData
 
     def test_exception_for_bad_data
       bad = File.open 'test/fixtures/bad'
-      assert_raise(RuntimeError) do 
-        @reader.read bad 
+      assert_raise(RuntimeError) do
+        @reader.read bad
       end
     end
+
+    def test_exception_for_missing_fields
+      tab_missing_gender = File.open 'test/fixtures/tab_missing_gender'
+      assert_raise(RuntimeError) do
+        @reader.read tab_missing_gender
+      end
+    end
+
+    def test_reads_tab
+      tab = File.open 'test/fixtures/tab'
+      data = @reader.read tab
+
+      assert_equal 3, data.size
+      assert_equal 5, data.first.size
+      assert_equal 'Peyton', data.first.first
+    end
+
 
     def test_reads_comma
       comma = File.open 'test/fixtures/comma'
