@@ -60,6 +60,16 @@ module CyrusData
       assert_equal 'BLastName', data.first.first
     end
 
+    def test_reads_tricky_pipe
+      tricky_pipe  = File.open 'test/fixtures/tricky-pipe'
+      data = @reader.read tricky_pipe
+
+      assert_equal 3, data.size
+      assert_equal 5, data.first.size
+      assert_equal 'Smith', data.first.first
+      assert_equal 'M', data.first[2]
+    end
+
     def test_reads_files
       pipe  = File.open 'test/fixtures/pipe'
       space = File.open 'test/fixtures/space'

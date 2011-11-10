@@ -4,7 +4,7 @@ module CyrusData
 
     class << self
 
-      DELIMITERS = [' | ', ', ', ' ', "\t"]
+      DELIMITERS = ['|', ',', ' ', "\t"]
 
       def read *files
         data = []
@@ -12,9 +12,9 @@ module CyrusData
         files.each do |file|
           delimiter = nil 
           file.each_line do |line|
-            delimiter ||= find_delimiter line
+            delimiters ||= find_delimiters line
 
-            data << read_datum(line, delimiter)
+            data << read_datum(line, delimiters)
           end 
         end
 
@@ -23,12 +23,16 @@ module CyrusData
 
       private
 
-        def read_datum line, delimiter
+        def read_datum line, delimiters
+          delimiter = delimiters.first
+          second_delimiter = delimiters[1]
+
           fields = line.split delimiter
+          fields.map {|field| field.strip!}
 
           case delimiter
             when DELIMITERS[0]
-              read_pipe fields
+              read_pipe fields, second_delimiter
             when DELIMITERS[1]
               read_comma fields
             when DELIMITERS[2]
@@ -43,10 +47,17 @@ module CyrusData
           swap_date_color fields
         end
 
-        def read_pipe fields
+      def read_pipe fields, second_delimiter
+          fields = split_first_and_last_name(fields, second_delimiter) if second_delimiter
+
           raise 'invalid data' if fields.size != 6
           swap_date_color(drop_middle_initial fields)
-        end
+      end
+
+      def split_first_and_last_name fields, delimiter
+        first_and_last_name = fields[0].split(delimiter)
+        first_and_last_name + fields[1..fields.size]
+      end
 
         def read_comma fields
           raise 'invalid data' if fields.size != 5
@@ -68,9 +79,18 @@ module CyrusData
           [*rest, date, color]
         end
 
-        def find_delimiter line
-          delimiter = line.match(/^\w+(\W+)/)[1]
-          (delimiter? delimiter) ? delimiter : raise('Invalid delimiter')
+      def remove_extra_space_delimiter(delimiters)
+        delimiters.delete ' ' if delimiters.include?(' ') && (delimiters.size > 1)
+      end
+
+      def find_delimiters line
+          delimiters = DELIMITERS.select do |delimiter|
+              line.include? delimiter
+          end
+
+          remove_extra_space_delimiter(delimiters)
+
+          delimiters
         end
 
         def delimiter? string
