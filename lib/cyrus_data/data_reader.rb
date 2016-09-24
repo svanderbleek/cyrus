@@ -1,23 +1,17 @@
 module CyrusData
-
   class DataReader
-
     class << self
-
       DELIMITERS = ['|', ',', ' ', "\t"]
 
       def read *files
         data = []
-        
         files.each do |file|
           delimiter = nil 
           file.each_line do |line|
             delimiters ||= find_delimiters line
-
             data << read_datum(line, delimiters)
           end 
         end
-
         data
       end
 
@@ -49,7 +43,6 @@ module CyrusData
 
       def read_pipe fields, second_delimiter
           fields = split_first_and_last_name(fields, second_delimiter) if second_delimiter
-
           raise 'invalid data' if fields.size != 6
           swap_date_color(drop_middle_initial fields)
       end
@@ -87,18 +80,13 @@ module CyrusData
           delimiters = DELIMITERS.select do |delimiter|
               line.include? delimiter
           end
-
           remove_extra_space_delimiter(delimiters)
-
           delimiters
         end
 
         def delimiter? string
           DELIMITERS.include? string  
         end
-
      end
-
   end
-
 end
