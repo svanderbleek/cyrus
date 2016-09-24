@@ -1,9 +1,7 @@
 require 'date'
 
 module CyrusData
-
   class DataStore
-
     class Datum
       attr_reader :value
 
@@ -37,7 +35,6 @@ module CyrusData
             Date.strptime date, '%m/%d/%Y'
           end
         end
-
     end
 
     attr_reader :data
@@ -64,7 +61,6 @@ module CyrusData
         comparators = fields.map do |field|
           lambda {|a,b| a.send(field) <=> b.send(field)}
         end
-
         combine comparators
       end
 
@@ -76,7 +72,5 @@ module CyrusData
           end
         end
      end
-
   end
-
 end
