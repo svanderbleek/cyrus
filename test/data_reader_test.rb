@@ -2,9 +2,7 @@ require 'test/unit'
 require 'cyrus_data/data_reader'
 
 module CyrusData
-
   class TestDataReader < Test::Unit::TestCase
-
     def setup
       @reader = DataReader
     end
@@ -78,7 +76,5 @@ module CyrusData
       data = @reader.read pipe, space, comma
       assert_equal 7, data.size
     end
-
   end
-
 end
