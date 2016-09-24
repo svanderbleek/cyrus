@@ -3,16 +3,13 @@ require 'date'
 require 'cyrus_data/data_store'
 
 module CyrusData
-
   class TestDataStore < Test::Unit::TestCase
-
     def setup
       @store = DataStore.new
     end
 
     def test_stores
       assert_equal 0, @store.data.size
-
       @store.store ['A', 'B', 'M', '1-1-1990', 'R']
       assert_equal 1, @store.data.size
     end
@@ -64,7 +61,5 @@ module CyrusData
       @store.order_by :last_name, :descending
       assert_equal 'D', @store.data.first.last_name
     end
-
   end
-
 end
